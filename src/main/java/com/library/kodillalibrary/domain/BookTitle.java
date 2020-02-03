@@ -1,7 +1,10 @@
 package com.library.kodillalibrary.domain;
 
-import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
 public class BookTitle {
 
     private Long titleId;
