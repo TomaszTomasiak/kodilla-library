@@ -2,6 +2,9 @@ package com.library.kodillalibrary.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "TITLES")
@@ -11,6 +14,7 @@ public class BookTitle {
     private  String titleName;
     private String author;
     private int yearOfPublication;
+    private List<BookCopy> copies = new ArrayList<>();
 
     public BookTitle() {
     }
@@ -57,6 +61,20 @@ public class BookTitle {
 
     public void setYearOfPublication(int yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
+    }
+
+    @OneToMany(
+            targetEntity = BookCopy.class,
+            mappedBy = "bookTitle",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    public List<BookCopy> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(List<BookCopy> copies) {
+        this.copies = copies;
     }
 }
 

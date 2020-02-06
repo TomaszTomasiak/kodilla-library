@@ -5,10 +5,11 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-@AllArgsConstructor
-public class BooksLoansDto {
-    private Long copieId;
-    private Long titleId;
+@AllArgsConstructor // konstruktor z wszystkich elementów????
+public class BookLoanDto {
+    private int loanId;
+    private BookCopy bookCopy;
+    private LibraryUser libraryUser;
     private LocalDate loanedDate;
     private LocalDate returnedDate;
 }

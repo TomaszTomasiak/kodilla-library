@@ -1,31 +1,42 @@
 package com.library.kodillalibrary.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "USERS")
-public class User {
+public class LibraryUser {
 
     private int userId;
     private String firstName;
     private String secondName;
-    private Date accountCreated;
+    private LocalDate accountCreated;
+    private List<BookLoan> loans = new ArrayList<>();
 
-    public User(String firstName, String secondName) {
+/*
+    public LibraryUser(String firstName, String secondName) {
         this.firstName = firstName;
         this.secondName = secondName;
-        this.accountCreated = new Date();
+        this.accountCreated = LocalDate.now();
     }
 
-    public User() {
+    public LibraryUser() {
     }
+
+ */
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "USER_ID", unique = true)
     public int getUserId() {
         return userId;
     }
@@ -42,7 +53,7 @@ public class User {
 
     @NotNull
     @Column(name = "CREATED")
-    public Date getAccountCreated() {
+    public LocalDate getAccountCreated() {
         return accountCreated;
     }
 
@@ -58,7 +69,21 @@ public class User {
         this.secondName = secondName;
     }
 
-    public void setAccountCreated(Date accountCreated) {
+    public void setAccountCreated(LocalDate accountCreated) {
         this.accountCreated = accountCreated;
+    }
+
+    @OneToMany(
+            targetEntity = BookLoan.class,
+            mappedBy = "libraryUser",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    public List<BookLoan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<BookLoan> loans) {
+        this.loans = loans;
     }
 }
