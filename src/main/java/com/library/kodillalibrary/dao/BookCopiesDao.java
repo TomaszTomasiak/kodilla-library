@@ -1,12 +1,12 @@
 package com.library.kodillalibrary.dao;
 
-import com.library.kodillalibrary.domain.BookCopy;
+import com.library.kodillalibrary.domain.TitleCopy;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository
-public interface BookCopiesDao extends CrudRepository<BookCopy, Integer> {
+public interface BookCopiesDao extends CrudRepository<TitleCopy, Integer> {
 
 }

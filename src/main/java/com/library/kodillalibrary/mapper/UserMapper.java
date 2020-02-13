@@ -13,23 +13,23 @@ public class UserMapper {
         return new LibraryUser(
                 libraryUserDto.getUserId(),
                 libraryUserDto.getFirstName(),
-                libraryUserDto.getSecondName(),
+                libraryUserDto.getLastName(),
                 libraryUserDto.getAccountCreated(),
-                libraryUserDto.getLoans());
+                libraryUserDto.getUserLoans());
     }
 
     public LibraryUserDto mapToLibraryUserDto (final LibraryUser libraryUser) {
         return new LibraryUserDto(
                 libraryUser.getUserId(),
                 libraryUser.getFirstName(),
-                libraryUser.getSecondName(),
+                libraryUser.getLastName(),
                 libraryUser.getAccountCreated(),
-                libraryUser.getLoans());
+                libraryUser.getUserLoans());
     }
 
     public List<LibraryUserDto> mapToLibraryUserDtoList(final List<LibraryUser> userList) {
         return userList.stream()
-                .map(u -> new LibraryUserDto(u.getUserId(), u.getFirstName(), u.getSecondName(), u.getAccountCreated(), u.getLoans()))
+                .map(u -> new LibraryUserDto(u.getUserId(), u.getFirstName(), u.getLastName(), u.getAccountCreated(), u.getUserLoans()))
                 .collect(Collectors.toList());
     }
 }

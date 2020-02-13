@@ -4,9 +4,9 @@ import com.library.kodillalibrary.dao.BookCopiesDao;
 import com.library.kodillalibrary.dao.BookTitleDao;
 import com.library.kodillalibrary.dao.BooksLoansDao;
 import com.library.kodillalibrary.dao.UserDao;
-import com.library.kodillalibrary.domain.BookCopy;
-import com.library.kodillalibrary.domain.BookLoan;
-import com.library.kodillalibrary.domain.BookTitle;
+import com.library.kodillalibrary.domain.TitleCopy;
+import com.library.kodillalibrary.domain.Loan;
+import com.library.kodillalibrary.domain.Title;
 import com.library.kodillalibrary.domain.LibraryUser;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
@@ -38,15 +38,15 @@ public class LibraryTestSuite {
     @Test
     public void testBookTitleDaoSaveWithCopies() {
         //Given
-        BookTitle bookTitle = new BookTitle("Title", "Author", 2009);
-        BookCopy bookCopy = new BookCopy(bookTitle, "in circulation");
-        BookCopy bookCopy2 = new BookCopy(bookTitle, "demaged");
-        bookTitle.getCopies().add(bookCopy);
-        bookTitle.getCopies().add(bookCopy2);
+        Title title = new Title(1,"Title", "Author", 2009);
+        TitleCopy titleCopy = new TitleCopy(1,title, "in circulation", new ArrayList<>());
+        TitleCopy titleCopy2 = new TitleCopy(2,title, "demaged", new ArrayList<>());
+        title.getTitleCopies().add(titleCopy);
+        title.getTitleCopies().add(titleCopy2);
 
         //When
-        bookTitleDao.save(bookTitle);
-        int id = bookTitle.getTitleId();
+        bookTitleDao.save(title);
+        int id = title.getTitleId();
 
         //Then
         Assert.assertNotEquals(0, id);
@@ -60,7 +60,7 @@ public class LibraryTestSuite {
     @Test
     public void testUserDaoSave() {
         //Given
-        LibraryUser libraryUser = new LibraryUser("Antoni", "Piechniczek");
+        LibraryUser libraryUser = new LibraryUser(1,"Antoni", "Piechniczek", LocalDate.of(2020, 01, 21),new ArrayList<>());
 
         //When
         userDao.save(libraryUser);
@@ -77,19 +77,19 @@ public class LibraryTestSuite {
     @Test
     public void testBookLoansDaoSaveWithCopiesAndUsers() {
         //Given
-        BookTitle bookTitle = new BookTitle("Title", "Author", 2009);
-        BookCopy bookCopy = new BookCopy(bookTitle, "in circulation");
-        BookCopy bookCopy2 = new BookCopy(bookTitle, "demaged");
-        bookTitle.getCopies().add(bookCopy);
-        bookTitle.getCopies().add(bookCopy2);
-        LibraryUser libraryUser = new LibraryUser("Hrabia", "Dracula");
-        BookLoan bookLoan = new BookLoan(LocalDate.of(2020, 01, 21), LocalDate.of(2020, 02, 01));
-        bookCopy.getLoans().add(bookLoan);
-        libraryUser.getLoans().add(bookLoan);
+        Title title = new Title(1,"Title", "Author", 2009);
+        TitleCopy titleCopy = new TitleCopy(1,title, "in circulation", new ArrayList<>());
+        TitleCopy titleCopy2 = new TitleCopy(2,title, "demaged", new ArrayList<>());
+        title.getTitleCopies().add(titleCopy);
+        title.getTitleCopies().add(titleCopy2);
+        LibraryUser libraryUser = new LibraryUser(1,"Antoni", "Piechniczek", LocalDate.of(2020, 01, 21),new ArrayList<>());
+        Loan loan = new Loan(1, titleCopy, libraryUser, LocalDate.of(2020, 01, 21), LocalDate.of(2020, 02, 01));
+        titleCopy.getCopyLoans().add(loan);
+        libraryUser.getUserLoans().add(loan);
 
         //When
-        booksLoansDao.save(bookLoan);
-        int id = bookLoan.getLoanId();
+        booksLoansDao.save(loan);
+        int id = loan.getLoanId();
 
         //Then
         Assert.assertNotEquals(0, id);

@@ -1,12 +1,21 @@
 package com.library.kodillalibrary.repository;
 
-import com.library.kodillalibrary.domain.BookLoan;
+import com.library.kodillalibrary.domain.Loan;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface LoanRepository extends CrudRepository<BookLoan, Integer> {
+@Repository
+public interface LoanRepository extends CrudRepository<Loan, Integer> {
 
     @Override
-    List<BookLoan> findAll();
+    List<Loan> findAll();
+
+    @Override
+    Loan save(Loan loan);
+
+
+    @Override
+    void deleteById(Integer loanId);
 }

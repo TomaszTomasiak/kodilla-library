@@ -1,31 +1,61 @@
 package com.library.kodillalibrary.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "LOANS")
-public class BookLoan {
+public class Loan {
 
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "LOAN_ID", unique = true)
     private int loanId;
-    private BookCopy bookCopy;
+
+    @ManyToOne
+    @JoinColumn(name = "COPY_ID")
+    private TitleCopy titleCopy;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private LibraryUser libraryUser;
+
+    @Column(name = "LOANED")
     private LocalDate loanedDate;
+
+    @Column(name = "RETURNED")
     private LocalDate returnedDate;
 
-    public BookLoan( LocalDate loanedDate, LocalDate returnedDate) {
-        //this.bookCopy = bookCopy;
-        //this.libraryUser = libraryUser;
+/*
+    public Loan(int loanId, Copy copy, LibraryUser libraryUser, LocalDate loanedDate, LocalDate returnedDate) {
+        this.loanId = loanId;
+        this.copy = copy;
+        this.libraryUser = libraryUser;
         this.loanedDate = loanedDate;
         this.returnedDate = returnedDate;
     }
 
-    public BookLoan() {
+    public Loan(Copy copy, LibraryUser libraryUser, LocalDate loanedDate, LocalDate returnedDate) {
+        this.copy = copy;
+        this.libraryUser = libraryUser;
+        this.loanedDate = loanedDate;
+        this.returnedDate = returnedDate;
     }
+    public Loan() {
+    }
+
+
 
     @Id
     @GeneratedValue
@@ -39,8 +69,8 @@ public class BookLoan {
 
     @ManyToOne
     @JoinColumn(name = "COPY_ID")
-    public BookCopy getBookCopy() {
-        return bookCopy;
+    public Copy getCopy() {
+        return copy;
     }
 
     @ManyToOne
@@ -66,8 +96,8 @@ public class BookLoan {
         this.returnedDate = returnedDate;
     }
 
-    public void setBookCopy(BookCopy bookCopy) {
-        this.bookCopy = bookCopy;
+    public void setCopy(Copy copy) {
+        this.copy = copy;
     }
 
     public void setLibraryUser(LibraryUser libraryUser) {
@@ -77,4 +107,6 @@ public class BookLoan {
     public void setLoanedDate(LocalDate loanedDate) {
         this.loanedDate = loanedDate;
     }
+
+ */
 }

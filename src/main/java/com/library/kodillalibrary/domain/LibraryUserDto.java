@@ -2,27 +2,19 @@ package com.library.kodillalibrary.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class LibraryUserDto {
     private int userId;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private LocalDate accountCreated;
-    private List<BookLoan> loans;
+    private List<Loan> userLoans;
 
-    /*
-    public LibraryUserDto(int userId, String firstName, String secondName, LocalDate accountCreated) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.accountCreated = accountCreated;
-    }
-
-     */
 }

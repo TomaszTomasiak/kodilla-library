@@ -1,33 +1,54 @@
 package com.library.kodillalibrary.controller;
 
 
-import com.library.kodillalibrary.domain.BookTitleDto;
+import com.library.kodillalibrary.domain.TitleDto;
+import com.library.kodillalibrary.mapper.TitleMapper;
+import com.library.kodillalibrary.service.DbService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/v1/library")
 public class TitleController {
+
+    @Autowired
+    private DbService service;
+
+    @Autowired
+    private TitleMapper titleMapper;
+
     @RequestMapping(method = RequestMethod.GET, value = "getTitles")
-    public List<BookTitleDto> getTitles() {
-        return new ArrayList<>();
+    public List<TitleDto> getTitles() {
+        return titleMapper.mapToBookTitleDtoList(service.getAllTitles());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTitle")
-    public BookTitleDto getTitle (int titleId) {
-        return new BookTitleDto(1,"Mock", "Krajewski", 2003);
+    public TitleDto getTitle(int titleId) throws ThisThingNotFoundException {
+        return titleMapper.mapToBookTitleDto(service.getTitle(titleId).orElseThrow(ThisThingNotFoundException::new));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createTitle")
-    public void createTitle(BookTitleDto bookTitleDto) {
+    @RequestMapping(method = RequestMethod.POST, value = "addTitle", consumes = APPLICATION_JSON_VALUE)
+    public void addTitle(@RequestBody TitleDto titleDto) {
+        service.addTitle(titleMapper.mapToBookTitle(titleDto));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTitle")
     public void deleteTitle(int titleId) {
+        service.deleteTitle(titleId);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "updateTitle")
+    public TitleDto updateTitle(@RequestBody TitleDto titleDto) {
+        return titleMapper.mapToBookTitleDto(service.addTitle(titleMapper.mapToBookTitle(titleDto)));
+    }
+
 
 }

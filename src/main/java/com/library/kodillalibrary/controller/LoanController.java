@@ -1,39 +1,63 @@
 package com.library.kodillalibrary.controller;
 
 
-import com.library.kodillalibrary.domain.BookCopy;
-import com.library.kodillalibrary.domain.BookLoanDto;
-import com.library.kodillalibrary.domain.BookTitle;
-import com.library.kodillalibrary.domain.LibraryUser;
+import com.library.kodillalibrary.domain.LoanDto;
+import com.library.kodillalibrary.mapper.LoanMapper;
+import com.library.kodillalibrary.service.DbService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 
 @RestController
 @RequestMapping("/v1/library")
 public class LoanController {
+
+    @Autowired
+    private DbService service;
+
+    @Autowired
+    private LoanMapper loanMapper;
+
     @RequestMapping(method = RequestMethod.GET, value = "getLoans")
-    public List<BookLoanDto> getLoans() {
-        return new ArrayList<>();
+    public List<LoanDto> getLoans() {
+        return loanMapper.mapToBookLoanDtoList(service.getAllLoans());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getLoan")
-    public BookLoanDto getLoan (int loanId) {
-        BookTitle bookTitle = new BookTitle("Title", "Author", 2009);
-        BookCopy bookCopy = new BookCopy(bookTitle, "in circulation");
-        LibraryUser libraryUser = new LibraryUser("Hrabia", "Dracula");
-        return new BookLoanDto(1,bookCopy, libraryUser, LocalDate.of(2020,01, 21), LocalDate.of(2020,01, 28)); //wróć do konstruktora
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "createLoan")
-    public void createLoan(BookLoanDto bookLoaDto) { //wróć do konstruktora
+    @RequestMapping(method = RequestMethod.POST, value = "createLoan", consumes = APPLICATION_JSON_VALUE)
+    public void addLoan(@RequestBody LoanDto loanDto) {
+        service.addLoan(loanMapper.mapToBookLoan(loanDto));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteLoan")
     public void deleteLoan(int loanId) {
+        service.deleteLoan(loanId);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "bookReturn")
+    public LoanDto statusChange(@RequestBody LoanDto loanDto) {
+        return loanMapper.mapToBookLoanDto(service.addLoan(loanMapper.mapToBookLoan(loanDto)));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getUserLoans")
+    public List<LoanDto> getUserLoans(int userId) {
+        return loanMapper.mapToBookLoanDtoList(service.getUserLoans(userId));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getTitleLoans")
+    public List<LoanDto> getTitleLoans(int titleId) {
+        return loanMapper.mapToBookLoanDtoList(service.getTitleLoans(titleId));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getCopyLoans")
+    public List<LoanDto> getCopyLoans(int copyId) {
+        return loanMapper.mapToBookLoanDtoList(service.getCopyLoans(copyId));
     }
 }
+
