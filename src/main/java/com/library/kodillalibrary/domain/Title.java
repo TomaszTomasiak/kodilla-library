@@ -1,20 +1,19 @@
 package com.library.kodillalibrary.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Entity
 @Table(name = "TITLES")
 public class Title {
@@ -34,6 +33,7 @@ public class Title {
     @Column(name = "PUBLICATED")
     private int yearOfPublication;
 
+    @JsonIgnore
     @OneToMany(
             targetEntity = TitleCopy.class,
             mappedBy = "title",
@@ -41,22 +41,6 @@ public class Title {
             fetch = FetchType.LAZY
     )
     private List<TitleCopy> titleCopies = new ArrayList<>();
-
-    @Autowired
-    public Title(int titleId, String titleName, String author, int yearOfPublication, List<TitleCopy> titleCopies) {
-        this.titleId = titleId;
-        this.titleName = titleName;
-        this.author = author;
-        this.yearOfPublication = yearOfPublication;
-        this.titleCopies = titleCopies;
-    }
-
-    public Title() {
-    }
-
-    public Title(int titleId) {
-        this.titleId = titleId;
-    }
 
 }
 

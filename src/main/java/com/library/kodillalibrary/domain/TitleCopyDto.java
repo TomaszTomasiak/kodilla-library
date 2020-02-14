@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TitleCopyDto {
-    private int copieId;
+    private int copyId;
     private Title title;
     private String status;
     private List<Loan> copyLoans;

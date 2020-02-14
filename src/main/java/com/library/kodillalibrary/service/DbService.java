@@ -10,6 +10,7 @@ import com.library.kodillalibrary.repository.TitleRepository;
 import com.library.kodillalibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -53,23 +54,19 @@ public class DbService {
     }
 
     public List<TitleCopy> getAllAvailableCopiesOfTitle(final int titleId) {
-        List<TitleCopy> titleAvailableCopiesList = titleCopyRepository.findAll().stream()
-                .filter(c -> c.getTitle().getTitleId() == titleId)
-                .filter(n -> n.getStatus().equals("in circulation"))
+        List<TitleCopy> availableCopiesList = titleCopyRepository.findAll().stream()
+                .filter(c -> c.getTitle().getTitleId() == titleId && c.getStatus().equals("in circulation"))
                 .collect(Collectors.toList());
 
-
-        List<Loan> loanedCopies = loanRepository.findAll().stream()
-                .filter(l -> l.getReturnedDate().equals(null))
+        List<Loan> unreturnedLoansContainsTheCopy = loanRepository.findAll().stream()
+                .filter(c -> c.getTitleCopy().getTitle().getTitleId() == titleId && c.getReturnedDate() == null)
                 .collect(Collectors.toList());
 
-        for(int i = 0; i < titleAvailableCopiesList.size(); i++) {
-
-            if(loanedCopies.contains(titleAvailableCopiesList.get(i))) {
-                titleAvailableCopiesList.remove(titleAvailableCopiesList.get(i));
-            }
+        for (int i = 0; i < unreturnedLoansContainsTheCopy.size(); i++) {
+            TitleCopy searchedTitleCopy = unreturnedLoansContainsTheCopy.get(i).getTitleCopy();
+            availableCopiesList.remove(searchedTitleCopy);
         }
-        return titleAvailableCopiesList;
+        return availableCopiesList;
     }
 
     public Optional<TitleCopy> getCopy(final int copyId) {
@@ -113,19 +110,19 @@ public class DbService {
         loanRepository.deleteById(loanId);
     }
 
-    public List<Loan> getTitleLoans (final int titleId) {
+    public List<Loan> getTitleLoans(final int titleId) {
         return loanRepository.findAll().stream()
                 .filter(l -> l.getTitleCopy().getTitle().getTitleId() == titleId)
                 .collect(Collectors.toList());
     }
 
-    public List<Loan> getUserLoans (final int userId) {
+    public List<Loan> getUserLoans(final int userId) {
         return loanRepository.findAll().stream()
                 .filter(l -> l.getLibraryUser().getUserId() == userId)
                 .collect(Collectors.toList());
     }
 
-    public List<Loan> getCopyLoans (final int copyId) {
+    public List<Loan> getCopyLoans(final int copyId) {
         return loanRepository.findAll().stream()
                 .filter(l -> l.getTitleCopy().getCopyId() == copyId)
                 .collect(Collectors.toList());

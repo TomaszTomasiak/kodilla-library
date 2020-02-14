@@ -38,7 +38,7 @@ public class LibraryTestSuite {
     @Test
     public void testBookTitleDaoSaveWithCopies() {
         //Given
-        Title title = new Title(1,"Title", "Author", 2009);
+        Title title = new Title(1,"Title", "Author", 2009, new ArrayList<>());
         TitleCopy titleCopy = new TitleCopy(1,title, "in circulation", new ArrayList<>());
         TitleCopy titleCopy2 = new TitleCopy(2,title, "demaged", new ArrayList<>());
         title.getTitleCopies().add(titleCopy);
@@ -60,7 +60,7 @@ public class LibraryTestSuite {
     @Test
     public void testUserDaoSave() {
         //Given
-        LibraryUser libraryUser = new LibraryUser(1,"Antoni", "Piechniczek", LocalDate.of(2020, 01, 21),new ArrayList<>());
+        LibraryUser libraryUser = new LibraryUser(1,"Antoni", "Piechniczek", LocalDate.of(2020, 01, 21), new ArrayList<>());
 
         //When
         userDao.save(libraryUser);
@@ -77,12 +77,12 @@ public class LibraryTestSuite {
     @Test
     public void testBookLoansDaoSaveWithCopiesAndUsers() {
         //Given
-        Title title = new Title(1,"Title", "Author", 2009);
+        Title title = new Title(1,"Title", "Author", 2009, new ArrayList<>());
         TitleCopy titleCopy = new TitleCopy(1,title, "in circulation", new ArrayList<>());
         TitleCopy titleCopy2 = new TitleCopy(2,title, "demaged", new ArrayList<>());
         title.getTitleCopies().add(titleCopy);
         title.getTitleCopies().add(titleCopy2);
-        LibraryUser libraryUser = new LibraryUser(1,"Antoni", "Piechniczek", LocalDate.of(2020, 01, 21),new ArrayList<>());
+        LibraryUser libraryUser = new LibraryUser(1,"Antoni", "Piechniczek", LocalDate.of(2020, 01, 21), new ArrayList<>());
         Loan loan = new Loan(1, titleCopy, libraryUser, LocalDate.of(2020, 01, 21), LocalDate.of(2020, 02, 01));
         titleCopy.getCopyLoans().add(loan);
         libraryUser.getUserLoans().add(loan);

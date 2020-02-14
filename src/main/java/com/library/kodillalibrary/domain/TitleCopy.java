@@ -1,10 +1,10 @@
 package com.library.kodillalibrary.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ public class TitleCopy {
     @Column(name = "STATUS")
     private String status;
 
+    @JsonIgnore
     @OneToMany(
             targetEntity = Loan.class,
             mappedBy = "titleCopy",
@@ -38,4 +39,5 @@ public class TitleCopy {
             fetch = FetchType.LAZY
     )
     private List<Loan> copyLoans = new ArrayList<>();
+
 }

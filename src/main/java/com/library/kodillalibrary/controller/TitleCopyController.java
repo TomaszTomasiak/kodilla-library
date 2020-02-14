@@ -49,7 +49,12 @@ public class TitleCopyController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAvailableCopies")
-    public List<TitleCopyDto> getAvailableCopies(int titleId){
+    public List<TitleCopyDto> getAvailableCopies(int titleId) {
         return titleCopyMapper.mapToBookCopyDtoList(service.getAllAvailableCopiesOfTitle(titleId));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getNumberOfAvailableCopies")
+    public int getNumberOfAvailableCopies(int titleId){
+        return titleCopyMapper.mapToBookCopyDtoList(service.getAllAvailableCopiesOfTitle(titleId)).size();
     }
 }

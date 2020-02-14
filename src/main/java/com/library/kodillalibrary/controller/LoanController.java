@@ -30,7 +30,7 @@ public class LoanController {
         return loanMapper.mapToBookLoanDtoList(service.getAllLoans());
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createLoan", consumes = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "addLoan", consumes = APPLICATION_JSON_VALUE)
     public void addLoan(@RequestBody LoanDto loanDto) {
         service.addLoan(loanMapper.mapToBookLoan(loanDto));
     }

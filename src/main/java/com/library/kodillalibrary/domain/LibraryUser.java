@@ -1,14 +1,18 @@
 package com.library.kodillalibrary.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -33,6 +37,7 @@ public class LibraryUser {
     @Column(name = "CREATED")
     private LocalDate accountCreated;
 
+    @JsonIgnore
     @OneToMany(
             targetEntity = Loan.class,
             mappedBy = "libraryUser",
@@ -40,15 +45,4 @@ public class LibraryUser {
             fetch = FetchType.LAZY
     )
     private List<Loan> userLoans = new ArrayList<>();
-
-    public LibraryUser(int userId, String firstName, String lastName, LocalDate accountCreated, List<Loan> userLoans) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.accountCreated = LocalDate.now();
-        this.userLoans = userLoans;
-    }
-
-    public LibraryUser() {
-    }
 }

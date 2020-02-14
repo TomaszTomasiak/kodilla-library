@@ -16,5 +16,4 @@ public class LibraryUserDto {
     private String lastName;
     private LocalDate accountCreated;
     private List<Loan> userLoans;
-
 }
