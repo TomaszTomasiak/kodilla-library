@@ -55,11 +55,11 @@ public class DbService {
 
     public List<TitleCopy> getAllAvailableCopiesOfTitle(final int titleId) {
         List<TitleCopy> availableCopiesList = titleCopyRepository.findAll().stream()
-                .filter(c -> c.getTitle().getTitleId() == titleId && c.getStatus().equals("in circulation"))
+                .filter(c -> c.getTitle().equals(titleId) && c.getStatus().equals("in circulation"))
                 .collect(Collectors.toList());
 
         List<Loan> unreturnedLoansContainsTheCopy = loanRepository.findAll().stream()
-                .filter(c -> c.getTitleCopy().getTitle().getTitleId() == titleId && c.getReturnedDate() == null)
+                .filter(c -> c.getTitleCopy().getTitle().equals(titleId) && c.getReturnedDate() == null)
                 .collect(Collectors.toList());
 
         for (int i = 0; i < unreturnedLoansContainsTheCopy.size(); i++) {
