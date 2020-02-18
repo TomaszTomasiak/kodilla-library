@@ -10,13 +10,12 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TitleCopyDto {
-    private int copyId;
-    private Title title;
-    private String status;
 
+    private int copyId;
+    private int titleId;
+    private String status;
     @JsonIgnore
     private List<Loan> copyLoans;
 }

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Component
 public class TitleMapper {
 
-    public Title mapToBookTitle(final TitleDto titleDto) {
+    public Title mapToTitle(final TitleDto titleDto) {
         return new Title(
                 titleDto.getTitleId(),
                 titleDto.getTitleName(),
@@ -19,7 +19,7 @@ public class TitleMapper {
                 );
     }
 
-    public TitleDto mapToBookTitleDto(final Title title) {
+    public TitleDto mapToTitleDto(final Title title) {
         return new TitleDto(
                 title.getTitleId(),
                 title.getTitleName(),
@@ -29,7 +29,7 @@ public class TitleMapper {
         );
     }
 
-    public List<TitleDto> mapToBookTitleDtoList(final List<Title> titleList) {
+    public List<TitleDto> mapToTitleDtoList(final List<Title> titleList) {
         return titleList.stream()
                 .map(t -> new TitleDto(t.getTitleId(), t.getTitleName(), t.getAuthor(), t.getYearOfPublication(), t.getTitleCopies()))
                 .collect(Collectors.toList());

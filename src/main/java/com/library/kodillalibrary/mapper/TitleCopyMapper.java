@@ -9,25 +9,28 @@ import java.util.stream.Collectors;
 
 @Component
 public class TitleCopyMapper {
-    public TitleCopy mapToBookCopy(final TitleCopyDto titleCopyDto) {
+
+
+    public TitleCopy mapToTitleCopy(final TitleCopyDto titleCopyDto) {
         return new TitleCopy(
                 titleCopyDto.getCopyId(),
-                titleCopyDto.getTitle(),
+                //titleCopyDto.getTitleId(),
+                null, // do poprawy
                 titleCopyDto.getStatus(),
                 titleCopyDto.getCopyLoans());
     }
 
-    public TitleCopyDto mapToBookCopyDto(final TitleCopy titleCopy) {
+    public TitleCopyDto mapToTitleCopyDto(final TitleCopy titleCopy) {
         return new TitleCopyDto(
                 titleCopy.getCopyId(),
-                titleCopy.getTitle(),
+                titleCopy.getTitle().getTitleId(),
                 titleCopy.getStatus(),
                 titleCopy.getCopyLoans());
     }
 
-    public List<TitleCopyDto> mapToBookCopyDtoList(final List<TitleCopy> loanList) {
+    public List<TitleCopyDto> mapToTitleCopyDtoList(final List<TitleCopy> loanList) {
         return loanList.stream()
-                .map(c -> new TitleCopyDto(c.getCopyId(), c.getTitle(), c.getStatus(), c.getCopyLoans()))
+                .map(c -> new TitleCopyDto(c.getCopyId(), c.getTitle().getTitleId(), c.getStatus(), c.getCopyLoans()))
                 .collect(Collectors.toList());
     }
 }

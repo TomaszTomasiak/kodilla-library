@@ -1,6 +1,7 @@
 package com.library.kodillalibrary.controller;
 
 
+import com.library.kodillalibrary.domain.TitleCopyDto;
 import com.library.kodillalibrary.domain.TitleDto;
 import com.library.kodillalibrary.mapper.TitleMapper;
 import com.library.kodillalibrary.service.DbService;
@@ -27,17 +28,17 @@ public class TitleController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getTitles")
     public List<TitleDto> getTitles() {
-        return titleMapper.mapToBookTitleDtoList(service.getAllTitles());
+        return titleMapper.mapToTitleDtoList(service.getAllTitles());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTitle")
     public TitleDto getTitle(int titleId) throws ThisThingNotFoundException {
-        return titleMapper.mapToBookTitleDto(service.getTitle(titleId).orElseThrow(ThisThingNotFoundException::new));
+        return titleMapper.mapToTitleDto(service.getTitle(titleId).orElseThrow(ThisThingNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addTitle", consumes = APPLICATION_JSON_VALUE)
     public void addTitle(@RequestBody TitleDto titleDto) {
-        service.addTitle(titleMapper.mapToBookTitle(titleDto));
+        service.addTitle(titleMapper.mapToTitle(titleDto));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTitle")
@@ -47,8 +48,7 @@ public class TitleController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateTitle")
     public TitleDto updateTitle(@RequestBody TitleDto titleDto) {
-        return titleMapper.mapToBookTitleDto(service.addTitle(titleMapper.mapToBookTitle(titleDto)));
+        return titleMapper.mapToTitleDto(service.addTitle(titleMapper.mapToTitle(titleDto)));
     }
-
 
 }

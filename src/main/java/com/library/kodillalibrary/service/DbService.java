@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,18 +54,26 @@ public class DbService {
         return titleCopyRepository.findAll();
     }
 
+
     public List<TitleCopy> getAllAvailableCopiesOfTitle(final int titleId) {
+
         List<TitleCopy> availableCopiesList = titleCopyRepository.findAll().stream()
-                .filter(c -> c.getTitle().equals(titleId) && c.getStatus().equals("in circulation"))
+                .filter(n -> n.getTitle().getTitleId() == titleId)
+                .filter(c -> c.getStatus().equals("in circulation"))
                 .collect(Collectors.toList());
+
 
         List<Loan> unreturnedLoansContainsTheCopy = loanRepository.findAll().stream()
-                .filter(c -> c.getTitleCopy().getTitle().equals(titleId) && c.getReturnedDate() == null)
+                .filter(c -> c.getReturnedDate() == null)
+                .filter(c -> c.getTitleCopy().getTitle().getTitleId() == titleId)
                 .collect(Collectors.toList());
 
-        for (int i = 0; i < unreturnedLoansContainsTheCopy.size(); i++) {
-            TitleCopy searchedTitleCopy = unreturnedLoansContainsTheCopy.get(i).getTitleCopy();
-            availableCopiesList.remove(searchedTitleCopy);
+        for (int i = 0; i < availableCopiesList.size(); i++) {
+            for (int n = 0; n < unreturnedLoansContainsTheCopy.size(); n++) {
+                if (availableCopiesList.get(i).equals(unreturnedLoansContainsTheCopy.get(n).getTitleCopy())) {
+                    availableCopiesList.remove(availableCopiesList.get(i));
+                }
+            }
         }
         return availableCopiesList;
     }
@@ -127,4 +136,12 @@ public class DbService {
                 .filter(l -> l.getTitleCopy().getCopyId() == copyId)
                 .collect(Collectors.toList());
     }
+
+    public List<TitleCopy> availableCopiesFromTitle (final int titleId) {
+        return titleCopyRepository.findAll().stream()
+                .filter(t -> t.getTitle().getTitleId() == titleId)
+                .filter(c -> c.getStatus().equals("in circulation"))
+                .collect(Collectors.toList());
+    }
+
 }

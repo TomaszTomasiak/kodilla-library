@@ -1,5 +1,6 @@
 package com.library.kodillalibrary.repository;
 
+import com.library.kodillalibrary.domain.Title;
 import com.library.kodillalibrary.domain.TitleCopy;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,7 @@ public interface TitleCopyRepository extends CrudRepository<TitleCopy, Integer> 
     @Override
     void deleteById(Integer copyId);
 
-
+List<TitleCopy> findByTitle(Title title);
 
 
 }

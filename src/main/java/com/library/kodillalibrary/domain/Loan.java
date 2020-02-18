@@ -26,13 +26,16 @@ public class Loan {
 
     @ManyToOne
     @JoinColumn(name = "COPY_ID")
+    @NotNull
     private TitleCopy titleCopy;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
+    @NotNull
     private LibraryUser libraryUser;
 
     @Column(name = "LOANED")
+    @NotNull
     private LocalDate loanedDate;
 
     @Column(name = "RETURNED")

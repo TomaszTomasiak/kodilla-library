@@ -25,17 +25,17 @@ public class TitleCopyController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getCopies")
     public List<TitleCopyDto> getCopies() {
-        return titleCopyMapper.mapToBookCopyDtoList(service.getAllCopies());
+        return titleCopyMapper.mapToTitleCopyDtoList(service.getAllCopies());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getCopy")
     public TitleCopyDto getCopy (int copyId) throws ThisThingNotFoundException{
-        return titleCopyMapper.mapToBookCopyDto(service.getCopy(copyId).orElseThrow(ThisThingNotFoundException::new));
+        return titleCopyMapper.mapToTitleCopyDto(service.getCopy(copyId).orElseThrow(ThisThingNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addCopy", consumes = APPLICATION_JSON_VALUE)
     public void createCopy(@RequestBody TitleCopyDto titleCopyDto) {
-        service.addCopy(titleCopyMapper.mapToBookCopy(titleCopyDto));
+        service.addCopy(titleCopyMapper.mapToTitleCopy(titleCopyDto));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteCopy")
@@ -45,16 +45,22 @@ public class TitleCopyController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateCopy")
     public TitleCopyDto statusChange(@RequestBody TitleCopyDto titleCopyDto) {
-        return titleCopyMapper.mapToBookCopyDto(service.addCopy(titleCopyMapper.mapToBookCopy(titleCopyDto)));
+        return titleCopyMapper.mapToTitleCopyDto(service.addCopy(titleCopyMapper.mapToTitleCopy(titleCopyDto)));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAvailableCopies")
     public List<TitleCopyDto> getAvailableCopies(int titleId) {
-        return titleCopyMapper.mapToBookCopyDtoList(service.getAllAvailableCopiesOfTitle(titleId));
+        return titleCopyMapper.mapToTitleCopyDtoList(service.getAllAvailableCopiesOfTitle(titleId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getNumberOfAvailableCopies")
     public int getNumberOfAvailableCopies(int titleId){
-        return titleCopyMapper.mapToBookCopyDtoList(service.getAllAvailableCopiesOfTitle(titleId)).size();
+        return titleCopyMapper.mapToTitleCopyDtoList(service.getAllAvailableCopiesOfTitle(titleId)).size();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "copiesOfTitle")
+    public List<TitleCopyDto> getCopiesOfTitle(int titleId) {
+        return titleCopyMapper.mapToTitleCopyDtoList(service.availableCopiesFromTitle(titleId));
     }
 }
+

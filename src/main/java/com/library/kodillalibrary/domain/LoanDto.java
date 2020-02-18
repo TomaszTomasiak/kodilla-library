@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public class LoanDto {
     private int loanId;
     private TitleCopy titleCopy;

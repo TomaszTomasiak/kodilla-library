@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class LoanMapper {
 
-    public Loan mapToBookLoan(final LoanDto loanDto) {
+    public Loan mapToLoan(final LoanDto loanDto) {
         return new Loan(
                 loanDto.getLoanId(),
                 loanDto.getTitleCopy(),
@@ -19,7 +19,7 @@ public class LoanMapper {
                 loanDto.getReturnedDate());
     }
 
-    public LoanDto mapToBookLoanDto(final Loan loan) {
+    public LoanDto mapToLoanDto(final Loan loan) {
         return new LoanDto(
                 loan.getLoanId(),
                 loan.getTitleCopy(),
@@ -28,7 +28,7 @@ public class LoanMapper {
                 loan.getReturnedDate());
     }
 
-    public List<LoanDto> mapToBookLoanDtoList(final List<Loan> loanList) {
+    public List<LoanDto> mapToLoanDtoList(final List<Loan> loanList) {
         return loanList.stream()
                 .map(l -> new LoanDto(l.getLoanId(), l.getTitleCopy(), l.getLibraryUser(), l.getLoanedDate(), l.getReturnedDate()))
                 .collect(Collectors.toList());

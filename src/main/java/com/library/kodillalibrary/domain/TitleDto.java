@@ -10,13 +10,15 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TitleDto {
     private int titleId;
-    private  String titleName;
+    private String titleName;
     private String author;
     private int yearOfPublication;
     @JsonIgnore
     private List<TitleCopy> titleCopies;
+
+
+
 }

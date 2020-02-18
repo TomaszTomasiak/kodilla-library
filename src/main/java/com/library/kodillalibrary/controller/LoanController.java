@@ -27,12 +27,12 @@ public class LoanController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getLoans")
     public List<LoanDto> getLoans() {
-        return loanMapper.mapToBookLoanDtoList(service.getAllLoans());
+        return loanMapper.mapToLoanDtoList(service.getAllLoans());
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addLoan", consumes = APPLICATION_JSON_VALUE)
     public void addLoan(@RequestBody LoanDto loanDto) {
-        service.addLoan(loanMapper.mapToBookLoan(loanDto));
+        service.addLoan(loanMapper.mapToLoan(loanDto));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteLoan")
@@ -42,22 +42,22 @@ public class LoanController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "bookReturn")
     public LoanDto statusChange(@RequestBody LoanDto loanDto) {
-        return loanMapper.mapToBookLoanDto(service.addLoan(loanMapper.mapToBookLoan(loanDto)));
+        return loanMapper.mapToLoanDto(service.addLoan(loanMapper.mapToLoan(loanDto)));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUserLoans")
     public List<LoanDto> getUserLoans(int userId) {
-        return loanMapper.mapToBookLoanDtoList(service.getUserLoans(userId));
+        return loanMapper.mapToLoanDtoList(service.getUserLoans(userId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTitleLoans")
     public List<LoanDto> getTitleLoans(int titleId) {
-        return loanMapper.mapToBookLoanDtoList(service.getTitleLoans(titleId));
+        return loanMapper.mapToLoanDtoList(service.getTitleLoans(titleId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getCopyLoans")
     public List<LoanDto> getCopyLoans(int copyId) {
-        return loanMapper.mapToBookLoanDtoList(service.getCopyLoans(copyId));
+        return loanMapper.mapToLoanDtoList(service.getCopyLoans(copyId));
     }
 }
 
