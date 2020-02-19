@@ -15,7 +15,6 @@ public interface LoanRepository extends CrudRepository<Loan, Integer> {
     @Override
     Loan save(Loan loan);
 
-
     @Override
     void deleteById(Integer loanId);
 }

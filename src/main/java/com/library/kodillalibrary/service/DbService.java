@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,11 +48,9 @@ public class DbService {
         userRepository.deleteById(id);
     }
 
-
     public List<TitleCopy> getAllCopies() {
         return titleCopyRepository.findAll();
     }
-
 
     public List<TitleCopy> getAllAvailableCopiesOfTitle(final int titleId) {
 
@@ -62,7 +59,6 @@ public class DbService {
                 .filter(c -> c.getStatus().equals("in circulation"))
                 .collect(Collectors.toList());
 
-
         List<Loan> unreturnedLoansContainsTheCopy = loanRepository.findAll().stream()
                 .filter(c -> c.getReturnedDate() == null)
                 .filter(c -> c.getTitleCopy().getTitle().getTitleId() == titleId)
@@ -70,7 +66,7 @@ public class DbService {
 
         for (int i = 0; i < availableCopiesList.size(); i++) {
             for (int n = 0; n < unreturnedLoansContainsTheCopy.size(); n++) {
-                if (availableCopiesList.get(i).equals(unreturnedLoansContainsTheCopy.get(n).getTitleCopy())) {
+                if (unreturnedLoansContainsTheCopy.get(n).getTitleCopy().getCopyId() == availableCopiesList.get(i).getCopyId()) {
                     availableCopiesList.remove(availableCopiesList.get(i));
                 }
             }
@@ -106,7 +102,6 @@ public class DbService {
         titleRepository.deleteById(titleId);
     }
 
-
     public List<Loan> getAllLoans() {
         return loanRepository.findAll();
     }
@@ -137,11 +132,10 @@ public class DbService {
                 .collect(Collectors.toList());
     }
 
-    public List<TitleCopy> availableCopiesFromTitle (final int titleId) {
+    public List<TitleCopy> availableCopiesFromTitle(final int titleId) {
         return titleCopyRepository.findAll().stream()
                 .filter(t -> t.getTitle().getTitleId() == titleId)
                 .filter(c -> c.getStatus().equals("in circulation"))
                 .collect(Collectors.toList());
     }
-
 }

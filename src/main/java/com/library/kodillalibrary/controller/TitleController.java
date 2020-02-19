@@ -1,7 +1,5 @@
 package com.library.kodillalibrary.controller;
 
-
-import com.library.kodillalibrary.domain.TitleCopyDto;
 import com.library.kodillalibrary.domain.TitleDto;
 import com.library.kodillalibrary.mapper.TitleMapper;
 import com.library.kodillalibrary.service.DbService;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import java.util.List;
 
@@ -50,5 +47,4 @@ public class TitleController {
     public TitleDto updateTitle(@RequestBody TitleDto titleDto) {
         return titleMapper.mapToTitleDto(service.addTitle(titleMapper.mapToTitle(titleDto)));
     }
-
 }

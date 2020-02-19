@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -43,6 +44,5 @@ public class Title {
             fetch = FetchType.EAGER
     )
     private List<TitleCopy> titleCopies = new ArrayList<>();
-
 }
 

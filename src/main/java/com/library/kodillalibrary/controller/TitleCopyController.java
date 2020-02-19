@@ -29,7 +29,7 @@ public class TitleCopyController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getCopy")
-    public TitleCopyDto getCopy (int copyId) throws ThisThingNotFoundException{
+    public TitleCopyDto getCopy(int copyId) throws ThisThingNotFoundException {
         return titleCopyMapper.mapToTitleCopyDto(service.getCopy(copyId).orElseThrow(ThisThingNotFoundException::new));
     }
 
@@ -54,7 +54,7 @@ public class TitleCopyController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getNumberOfAvailableCopies")
-    public int getNumberOfAvailableCopies(int titleId){
+    public int getNumberOfAvailableCopies(int titleId) {
         return titleCopyMapper.mapToTitleCopyDtoList(service.getAllAvailableCopiesOfTitle(titleId)).size();
     }
 

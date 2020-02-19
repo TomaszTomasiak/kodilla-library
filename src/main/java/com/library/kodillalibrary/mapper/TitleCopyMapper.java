@@ -1,21 +1,22 @@
 package com.library.kodillalibrary.mapper;
 
-import com.library.kodillalibrary.domain.Title;
 import com.library.kodillalibrary.domain.TitleCopy;
 import com.library.kodillalibrary.domain.TitleCopyDto;
+import com.library.kodillalibrary.repository.TitleRepository;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class TitleCopyMapper {
 
+    TitleRepository titleRepository;
 
     public TitleCopy mapToTitleCopy(final TitleCopyDto titleCopyDto) {
         return new TitleCopy(
                 titleCopyDto.getCopyId(),
-                //titleCopyDto.getTitleId(),
-                null, // do poprawy
+                titleRepository.findByTitleId(titleCopyDto.getTitleId()),
                 titleCopyDto.getStatus(),
                 titleCopyDto.getCopyLoans());
     }

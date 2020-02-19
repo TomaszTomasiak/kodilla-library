@@ -18,7 +18,7 @@ public class UserMapper {
                 libraryUserDto.getUserLoans());
     }
 
-    public LibraryUserDto mapToLibraryUserDto (final LibraryUser libraryUser) {
+    public LibraryUserDto mapToLibraryUserDto(final LibraryUser libraryUser) {
         return new LibraryUserDto(
                 libraryUser.getUserId(),
                 libraryUser.getFirstName(),

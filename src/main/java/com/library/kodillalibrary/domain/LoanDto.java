@@ -3,7 +3,6 @@ package com.library.kodillalibrary.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -12,8 +11,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class LoanDto {
     private int loanId;
-    private TitleCopy titleCopy;
-    private LibraryUser libraryUser;
+    private int copyId;
+    private int userId;
     private LocalDate loanedDate;
     private LocalDate returnedDate;
 }

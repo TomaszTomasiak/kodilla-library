@@ -7,5 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository
-public interface BookTitleDao extends CrudRepository<Title, Integer> {
+public interface TitleDao extends CrudRepository<Title, Integer> {
 }

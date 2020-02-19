@@ -22,5 +22,5 @@ public interface UserRepository extends CrudRepository<LibraryUser, Integer> {
     @Override
     void deleteById(Integer id);
 
-
+    LibraryUser findByUserId(Integer userId);
 }

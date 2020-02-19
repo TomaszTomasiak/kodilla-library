@@ -1,6 +1,5 @@
 package com.library.kodillalibrary.controller;
 
-
 import com.library.kodillalibrary.domain.LoanDto;
 import com.library.kodillalibrary.mapper.LoanMapper;
 import com.library.kodillalibrary.service.DbService;
@@ -9,11 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 
 @RestController
 @RequestMapping("/v1/library")

@@ -41,5 +41,4 @@ public class TitleCopy {
             fetch = FetchType.LAZY
     )
     private List<Loan> copyLoans = new ArrayList<>();
-
 }

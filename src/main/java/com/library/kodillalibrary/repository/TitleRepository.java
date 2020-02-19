@@ -16,12 +16,11 @@ public interface TitleRepository extends CrudRepository<Title, Integer> {
     @Override
     Title save(Title title);
 
-
     @Override
     Optional<Title> findById(Integer id);
 
     @Override
     void deleteById(Integer titleId);
 
-
+    Title findByTitleId(Integer titleId);
 }

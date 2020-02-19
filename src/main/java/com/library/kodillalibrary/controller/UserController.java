@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUser")
-    public LibraryUserDto getUser (int userId) throws ThisThingNotFoundException {
+    public LibraryUserDto getUser(int userId) throws ThisThingNotFoundException {
         return userMapper.mapToLibraryUserDto(service.getUser(userId).orElseThrow(ThisThingNotFoundException::new));
     }
 
