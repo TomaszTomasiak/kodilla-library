@@ -21,7 +21,7 @@ public class LoanMapper {
     public Loan mapToLoan(final LoanDto loanDto) {
         return new Loan(
                 loanDto.getLoanId(),
-                titleCopyRepository.findByCopyId(loanDto.getCopyId()),
+                titleCopyRepository.findById(loanDto.getCopyId()).orElse(null),
                 userRepository.findByUserId(loanDto.getUserId()),
                 loanDto.getLoanedDate(),
                 loanDto.getReturnedDate());
